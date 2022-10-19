@@ -9,7 +9,7 @@ The calculator should have the following features:
 4. It should be capable of performing the log (natural log) and exp functions.
 5. The results should be rounded off to 3 decimal places.
 6. The user interface should be designed properly.
-Examples of expressions and values are given below:
+Examples of expressions and values are given below:  
 a. "exp(4)" should return a string containing "54.598".  
 b. "3+5*exp(4.2)/(5+7)" should return a string containing "30.786".  
 c. "3+**8" should return an error message.  
