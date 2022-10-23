@@ -9,6 +9,14 @@ def testConvertToPostfix():
 	assert convertToPostfix("23 * 2 + 80 * 60") == "23 2 * 80 60 * +"
 	assert convertToPostfix("60 * 2 * 70 - 90") == "60 2 * 70 * 90 -"
 
+	# test for division and brackets
+
+	assert convertToPostfix("10 + 2 + (2 * 5)") == "10 2 + 2 5 * +"
+	assert convertToPostfix("124 / (10 - 5)") == "124 10 5 - /"
+	assert convertToPostfix("25 - 5 * (8 / 4)") == "25 5 8 4 / * -"
+	assert convertToPostfix("(12 * 8) - (12 / 3)") == "12 8 * 12 3 / -"
+	assert convertToPostfix("-50 + (12 * 6)") == "50 - 12 6 * +"
+
 
 
 # Tests for solvePostfix.
@@ -17,3 +25,10 @@ def testSolvePostfix():
 	assert solvePostfix("3 3 *") == 9
 	assert solvePostfix("9 6 -") == 3
 	assert solvePostfix("4 3 * 12 + 4 -") == 20
+
+	# test for division and brackets
+
+	assert solvePostfix("25 5 8 4 / * -") == 15
+	assert solvePostfix("10 2 + 2 5 * +") == 22
+	assert solvePostfix("12 8 * 12 3 / -") == 92
+	assert solvePostfix("124 10 5 - /") == 24.8
