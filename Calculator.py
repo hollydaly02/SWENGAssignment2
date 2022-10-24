@@ -50,7 +50,7 @@ def solvePostfix(postfix):
 			arg2 = argumentStack.pop()
 			answer = eval(arg2 + symbol + arg1)
 			argumentStack.append(str(answer))
-	return int(argumentStack.pop())	
+	return argumentStack.pop()	
 
 
 if __name__ == "__main__":
