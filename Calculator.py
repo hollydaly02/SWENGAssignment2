@@ -50,7 +50,8 @@ def solvePostfix(postfix):
 			arg2 = argumentStack.pop()
 			answer = eval(arg2 + symbol + arg1)
 			argumentStack.append(str(answer))
-	return argumentStack.pop()	
+	# all answers must round to 3 decimal places
+	return round(float(argumentStack.pop()), 3)	 					
 
 
 if __name__ == "__main__":
