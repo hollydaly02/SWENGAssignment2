@@ -1,10 +1,20 @@
 from collections import deque
+from flask import Flask, render_template, request
+app = Flask(__name__)
 
 # dictionary to help check precedence
-Precedence = {'+':1, '-':1, '*': 2}												
+Precedence = {'+':1, '-':1, '*': 2}			
+
+@app.route('/')
+def homeFormPage():
+	return render_template('home-form.html')
 
 # Function that takes an infix expression and returns it in postfix form.
-def convertToPostfix(infix):
+@app.route('/', methods=['POST'])
+def convertToPostfix():
+
+	# this takes in the user input from the front end
+	infix = request.form['text']
 
 	output = ""
 	stack = deque()																
@@ -24,7 +34,7 @@ def convertToPostfix(infix):
 	while stack:																
 		output = output + " " + stack.pop()
 		
-	return output
+	return solvePostfix(output)
 
 # Function that takes a postfix expression and returns the result.
 def solvePostfix(postfix):
@@ -44,8 +54,10 @@ def solvePostfix(postfix):
 			argumentStack.append(arg1*arg2)
 		else:
 			argumentStack.append(int(symbol))
-	return argumentStack.pop()	
+	# this sends out the answer page for the front end, with the new calculated variables
+	return render_template('answer-page.html', postfixEquation = postfix, answer = argumentStack.pop())
 
+"""
 if __name__ == "__main__":
 	try:
 		inputExpression = input("Enter expression> ")
@@ -54,3 +66,7 @@ if __name__ == "__main__":
 	except:
 		print("Error, please input a valid expression")
 		
+"""
+
+if __name__ == 'main':
+	app.run(debug=True, host='0.0.0.0')
