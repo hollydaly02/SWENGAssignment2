@@ -1,4 +1,5 @@
 from collections import deque
+
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
@@ -8,6 +9,7 @@ Precedence = {'+':1, '-':1, '*': 2}
 @app.route('/')
 def homeFormPage():
 	return render_template('home-form.html')
+							
 
 # Function that takes an infix expression and returns it in postfix form.
 @app.route('/', methods=['POST'])
@@ -23,10 +25,20 @@ def convertToPostfix():
 	for c in infix:
 		if c.isdigit(): 									
 			output += c
+
+		elif c == '(':
+			stack.append(c)
+		
+		elif c == ')':
+			while (stack[-1] != '(') and (stack):
+				output = output + " " + stack.pop()
+			
+			stack.pop()
+
 		else:																
 			output += " "			
 			# check for precedence and add to output
-			while len(stack) > 0 and Precedence[c] <= Precedence[stack[-1]]:	
+			while  len(stack) > 0 and stack[-1] != '(' and Precedence[c] <= Precedence[stack[-1]]:	
 				output = output + stack.pop() + " "
 			stack.append(c)
 
@@ -36,19 +48,14 @@ def convertToPostfix():
 		
 	return solvePostfix(output)
 
+
 # Function that takes a postfix expression and returns the result.
 def solvePostfix(postfix):
 	argumentStack = deque()
 	for symbol in postfix.split(" "):
-		if symbol == "+":
-			arg1 = argumentStack.pop()
-			arg2 = argumentStack.pop()
-			argumentStack.append(arg1+arg2)
-		elif symbol == "-":
-			arg1 = argumentStack.pop()
-			arg2 = argumentStack.pop()
-			argumentStack.append(arg2-arg1)
-		elif symbol == "*":
+		if symbol.isdigit():
+			argumentStack.append(symbol)
+		else:
 			arg1 = argumentStack.pop()
 			arg2 = argumentStack.pop()
 			argumentStack.append(arg1*arg2)
@@ -57,6 +64,7 @@ def solvePostfix(postfix):
 	# this sends out the answer page for the front end, with the new calculated variables
 	return render_template('answer-page.html', postfixEquation = postfix, answer = argumentStack.pop())
 
+
 """
 if __name__ == "__main__":
 	try:
@@ -64,7 +72,8 @@ if __name__ == "__main__":
 		answer = solvePostfix(convertToPostfix(inputExpression))
 		print("The answer is {}".format(answer))
 	except:
-		print("Error, please input a valid expression")
+		traceback.print_exc()
+		#print("Error, please input a valid expression")
 		
 """
 
