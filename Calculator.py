@@ -59,23 +59,10 @@ def solvePostfix(postfix):
 			arg1 = argumentStack.pop()
 			arg2 = argumentStack.pop()
 			argumentStack.append(arg1*arg2)
-		else:
-			argumentStack.append(int(symbol))
 	# this sends out the answer page for the front end, with the new calculated variables
 	return render_template('answer-page.html', postfixEquation = postfix, answer = argumentStack.pop())
 
 
-"""
-if __name__ == "__main__":
-	try:
-		inputExpression = input("Enter expression> ")
-		answer = solvePostfix(convertToPostfix(inputExpression))
-		print("The answer is {}".format(answer))
-	except:
-		traceback.print_exc()
-		#print("Error, please input a valid expression")
-		
-"""
 
 if __name__ == 'main':
 	app.run(debug=True, host='0.0.0.0')
