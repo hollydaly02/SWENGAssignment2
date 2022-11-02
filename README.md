@@ -15,3 +15,11 @@ b. "3+5*exp(4.2)/(5+7)" should return a string containing "30.786".
 c. "3+**8" should return an error message.  
 
 You should develop the app in two releases. You should also create a suitable CI workflow to run the unit tests and this should be triggered when pushing or merging into the main branch. The Continuous Delivery workflow, on the other hand, should containerize the app and push the image into Docker Hub. This workflow should be triggered when creating a release tag. Make sure to use the tag to distinguish between the two versions of the app image (don't use "latest" as a tag). You also need to apply the branching concept to manage tasks and teamwork.
+
+
+# Flask API
+
+- To run app, first activate the virtual environemnt (venv) Run the command $ "venv\Scripts\activate".
+- Run the command $ "flask --app Calculator run"
+- App should be running at the address "http://127.0.0.1:5000/" in your browser.
+

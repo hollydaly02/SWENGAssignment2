@@ -1,11 +1,16 @@
 from collections import deque
-from inspect import trace
-import traceback
+
+from flask import Flask, render_template, request
+app = Flask(__name__)
 
 # dictionary to help check precedence
-Precedence = {'+':1, '-':1, '*': 2, '/': 2}												
+Precedence = {'+':1, '-':1, '*': 2, '/': 2}			
 
-# Function that takes an infix expression and returns it in postfix form.
+@app.route("/")
+def homeFormPage():
+	return render_template('home-form.html')
+							
+
 def convertToPostfix(infix):
 
 	output = ""
@@ -50,16 +55,23 @@ def solvePostfix(postfix):
 			arg2 = argumentStack.pop()
 			answer = eval(arg2 + symbol + arg1)
 			argumentStack.append(str(answer))
-	# all answers must round to 3 decimal places
-	return round(float(argumentStack.pop()), 3)	 					
+	# this sends out the answer page for the front end, with the new calculated variables
+	#return render_template('answer-page.html', postfixEquation = postfix, answer = argumentStack.pop())
+	
+	return round(float(argumentStack.pop()), 3)
 
 
-if __name__ == "__main__":
+# Function that takes an infix expression and returns it in postfix form.
+@app.route("/", methods=['POST'])
+def takeInfix():
+	infix = request.form['text']
 	try:
-		inputExpression = input("Enter expression> ")
-		answer = solvePostfix(convertToPostfix(inputExpression))
-		print("The answer is {}".format(answer))
+		postfix = convertToPostfix(infix)
+		return render_template('answer-page.html', postfixEquation = postfix, answer = solvePostfix(postfix))
 	except:
-		traceback.print_exc()
-		#print("Error, please input a valid expression")
-		
+		return render_template('error-page.html')
+	
+
+
+if __name__ == 'main':
+	app.run(debug=True, host='0.0.0.0')
