@@ -11,12 +11,7 @@ def homeFormPage():
 	return render_template('home-form.html')
 							
 
-# Function that takes an infix expression and returns it in postfix form.
-@app.route("/", methods=['POST'])
-def convertToPostfix():
-
-	# this takes in the user input from the front end
-	infix = request.form['text']
+def convertToPostfix(infix):
 
 	output = ""
 	stack = deque()																
@@ -46,7 +41,7 @@ def convertToPostfix():
 	while stack:																
 		output = output + " " + stack.pop()
 		
-	return solvePostfix(output)
+	return output
 
 
 # Function that takes a postfix expression and returns the result.
@@ -61,8 +56,21 @@ def solvePostfix(postfix):
 			answer = eval(arg2 + symbol + arg1)
 			argumentStack.append(str(answer))
 	# this sends out the answer page for the front end, with the new calculated variables
-	return render_template('answer-page.html', postfixEquation = postfix, answer = argumentStack.pop())
+	#return render_template('answer-page.html', postfixEquation = postfix, answer = argumentStack.pop())
+	
+	return round(float(argumentStack.pop()), 3)
 
+
+# Function that takes an infix expression and returns it in postfix form.
+@app.route("/", methods=['POST'])
+def takeInfix():
+	infix = request.form['text']
+	try:
+		postfix = convertToPostfix(infix)
+		return render_template('answer-page.html', postfixEquation = postfix, answer = solvePostfix(postfix))
+	except:
+		return render_template('error-page.html')
+	
 
 
 if __name__ == 'main':
