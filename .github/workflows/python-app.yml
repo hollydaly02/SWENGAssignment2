@@ -32,7 +32,6 @@ jobs:
     - name: Install flask
       run: |
         pip install Flask
-        venv\Scripts\activate
     - name: Test with pytest
       run: |
         pytest CalculatorTests.py
