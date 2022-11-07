@@ -21,6 +21,7 @@ You should develop the app in two releases. You should also create a suitable CI
 
 - To run app, first create python virtual environent: "py -3 -m venv venv"
 - Next, activate the venv using the script: "venv\Scripts\activate"
+- Install flask to the venv with "pip install Flask"
 - Run the command $ "flask --app Calculator run"
 - App should be running at the address "http://127.0.0.1:5000/" in your browser.
 
