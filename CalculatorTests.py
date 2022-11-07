@@ -15,6 +15,11 @@ def testConvertToPostfix():
 	assert convertToPostfix("124 / (10 - 5)") == "124 10 5 - /"
 	assert convertToPostfix("25 - 5 * (8 / 4)") == "25 5 8 4 / * -"
 	assert convertToPostfix("(12 * 8) - (12 / 3)") == "12 8 * 12 3 / -"
+	
+	# test for power
+	assert convertToPostfix("2 ^ 3") == "2 3 ^"
+	assert convertToPostfix("3 + 4 - 7 ^ 2") == "3 4 + 7 2 ^ -"
+	assert convertToPostfix("(3 ^ 5 - 9) * 4") == "3 5 ^ 9 - 4 *"
 
 
 
