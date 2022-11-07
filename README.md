@@ -23,5 +23,6 @@ You should develop the app in two releases. You should also create a suitable CI
 - Next, activate the venv using the script: "venv\Scripts\activate"
 - Install flask to the venv with "pip install Flask"
 - Run the command $ "flask --app Calculator run"
+- To run on docker, run the command $ "docker run -p 5000:5000 swengassignment2".
 - App should be running at the address "http://127.0.0.1:5000/" in your browser.
 
