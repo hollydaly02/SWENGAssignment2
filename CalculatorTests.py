@@ -36,3 +36,8 @@ def testSolvePostfix():
 	assert solvePostfix("10 2 + 2 5 * +") == 22.0
 	assert solvePostfix("12 8 * 12 3 / -") == 92.0
 	assert solvePostfix("124 10 5 - /") == 24.8
+	
+	# test for power
+	assert solvePostfix("3 2 ^") == 9.0
+	assert solvePostfix("9 8 * 4 3 ^ -") == 8.0
+	assert solvePostfix("8 5 - 2 3 ^ *") == 24.0
