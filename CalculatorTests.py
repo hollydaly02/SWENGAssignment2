@@ -27,6 +27,11 @@ def testEvalExp():
 	assert evalExp("exp(4)") == "54.598"
 	
 
+# Tests for eval.
+def testEvalLog():
+	assert evalLog("log(6)") == "1.792"
+	
+
 # Tests for solvePostfix.
 def testSolvePostfix():
 	assert solvePostfix("2 4 +") == 6.0
