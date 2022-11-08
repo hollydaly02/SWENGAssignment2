@@ -71,10 +71,11 @@ def evalLog(input):
         while string[endIndex] != ")":
             log += string[endIndex]
             endIndex += 1
-        output = string.replace("log("+log+")", str(math.log(float(log))))
+        x = string.replace("log("+log+")", str(math.log(float(log))))
+        x = float(x)
+        x = round(x, 3)
+        output = str(x)
     return output
-
-
 
 
 # Function that takes a postfix expression and returns the result.
