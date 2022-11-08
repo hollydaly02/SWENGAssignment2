@@ -28,12 +28,12 @@ def testConvertToPostfix():
 	
 # Tests for evalExp.
 def testEvalExp():
-	assert evalExp("exp(4)", 0) == "54.598"
+	assert evalExp("exp(4)", 0) == ["54.598", "exp(4)"]
 	
 
 # Tests for eval.
 def testEvalLog():
-	assert evalLog("log(6)", 0) == "1.792"
+	assert evalLog("log(6)", 0) == ["1.792", "log(6)"]
 	
 
 # Tests for solvePostfix.
