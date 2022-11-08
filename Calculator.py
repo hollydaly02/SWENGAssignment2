@@ -54,7 +54,10 @@ def evalExp(input):
         while string[endIndex] != ")":
             exp += string[endIndex]
             endIndex += 1
-        output = string.replace("exp("+exp+")", str(math.exp(float(exp))))
+        x = string.replace("exp("+exp+")", str(math.exp(float(exp))))
+        x = float(x)
+        x = round(x, 3)
+        output = str(x)
     return output
 
 
