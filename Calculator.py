@@ -28,8 +28,7 @@ def evalExp(input, index):
 	output.append(string[startIndex:endIndex+1])
 	return output
 
-
-
+# returns array with evaluated log in index 0, and the log expression itself in index 1
 def evalLog(input, index):
 	output = []
 	string = input
@@ -46,7 +45,7 @@ def evalLog(input, index):
 	return output
 
 
-# method to replace all exps and logs in original string with evaluated answers 
+# method to replace all exps in original string with evaluated answers 
 def replaceExpExpression(string):
 	output = ""
 
@@ -62,7 +61,7 @@ def replaceExpExpression(string):
 			output = output.replace(x[1], x[0])
 	return output
 
-# method to replace all exps and logs in original string with evaluated answers 
+# method to replace all logs in original string with evaluated answers 
 def replaceLogExpression(string):
 	output = ""
 
@@ -96,6 +95,7 @@ def convertToPostfix(infix):
 		infix = replaceExpExpression(infix)
 	if "log" in infix:
 		infix = replaceLogExpression(infix)
+		
 	output = ""
 	stack = deque()																
 	infix = infix.replace(' ', '')		
