@@ -12,14 +12,96 @@ def homeFormPage():
 	return render_template('home-form.html')
 							
 
-def convertToPostfix(infix):
+# returns array with evaluated exp in index 0, and the exp expression itself in index 1
+def evalExp(input, index):
+	output = []
+	string = input
+	startIndex = index
+	endIndex = startIndex + 4
+	exp = ""
+	while string[endIndex] != ")":
+		exp += string[endIndex]
+		endIndex += 1
+	x = math.exp(float(exp))
+	x = round(x, 3)
+	output.append(str(x))
+	output.append(string[startIndex:endIndex+1])
+	return output
 
+
+
+def evalLog(input, index):
+	output = []
+	string = input
+	startIndex = index
+	endIndex = startIndex + 4
+	log = ""
+	while string[endIndex] != ")":
+		log += string[endIndex]
+		endIndex += 1
+	x = math.log(float(log))
+	x = round(x, 3)
+	output.append(str(x))
+	output.append(string[startIndex:endIndex+1])
+	return output
+
+
+# method to replace all exps and logs in original string with evaluated answers 
+def replaceExpExpression(string):
+	output = ""
+
+	numOfExp = string.count("exp")
+	for i in range(numOfExp):
+		if output == "":
+			expIndices = [x for x in range(len(string)) if string.startswith("exp(", x)]
+			x = evalExp(string, expIndices[0])
+			output = string.replace(x[1], x[0])
+		else:
+			expIndices = [x for x in range(len(output)) if output.startswith("exp(", x)]
+			x = evalExp(output, expIndices[0])
+			output = output.replace(x[1], x[0])
+	return output
+
+# method to replace all exps and logs in original string with evaluated answers 
+def replaceLogExpression(string):
+	output = ""
+
+	numOfExp = string.count("log")
+	for i in range(numOfExp):
+		if output == "":
+			logIndices = [x for x in range(len(string)) if string.startswith("log(", x)]
+			x = evalLog(string, logIndices[0])
+			output = string.replace(x[1], x[0])
+		else:
+			logIndices = [x for x in range(len(output)) if output.startswith("log(", x)]
+			x = evalLog(output, logIndices[0])
+			output = output.replace(x[1], x[0])
+	return output
+ 
+
+# method to check if input is float
+def checkFloat(input):
+	try:
+		float(input)
+		return True
+	except ValueError:
+		return False
+
+
+
+def convertToPostfix(infix):
+	#find log/exp, evaluate and replace it in the original infix string
+	
+	if "exp" in infix:
+		infix = replaceExpExpression(infix)
+	if "log" in infix:
+		infix = replaceLogExpression(infix)
 	output = ""
 	stack = deque()																
 	infix = infix.replace(' ', '')		
 
 	for c in infix:
-		if c.isdigit(): 									
+		if c.isdigit() or c == '.': 									
 			output += c
 
 		elif c == '(':
@@ -45,45 +127,11 @@ def convertToPostfix(infix):
 	return output
 
 
-def evalExp(input):
-    output = input.lower()
-    while(output.find("exp(") != -1):
-        string = output
-        startIndex = string.find("exp(")
-        endIndex = startIndex + 4
-        exp = ""
-        while string[endIndex] != ")":
-            exp += string[endIndex]
-            endIndex += 1
-        x = string.replace("exp("+exp+")", str(math.exp(float(exp))))
-        x = float(x)
-        x = round(x, 3)
-        output = str(x)
-    return output
-
-
-def evalLog(input):
-    output = input.lower()
-    while(output.find("log(") != -1):
-        string = output
-        startIndex = string.find("log(")
-        endIndex = startIndex + 4
-        log = ""
-        while string[endIndex] != ")":
-            log += string[endIndex]
-            endIndex += 1
-        x = string.replace("log("+log+")", str(math.log(float(log))))
-        x = float(x)
-        x = round(x, 3)
-        output = str(x)
-    return output
-
-
 # Function that takes a postfix expression and returns the result.
 def solvePostfix(postfix):
 	argumentStack = deque()
 	for symbol in postfix.split(" "):
-		if symbol.isdigit():
+		if symbol.isdigit() or checkFloat(symbol):
 			argumentStack.append(symbol)
 		else:
 			arg1 = argumentStack.pop()

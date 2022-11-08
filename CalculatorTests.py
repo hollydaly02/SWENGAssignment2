@@ -20,6 +20,10 @@ def testConvertToPostfix():
 	assert convertToPostfix("2 ^ 3") == "2 3 ^"
 	assert convertToPostfix("3 + 4 - 7 ^ 2") == "3 4 + 7 2 ^ -"
 	assert convertToPostfix("(3 ^ 5 - 9) * 4") == "3 5 ^ 9 - 4 *"
+
+	# test for exp and log
+	assert convertToPostfix("5 + exp(2)") == "5 7.389 +"
+	assert convertToPostfix("5 + log(2)") == "5 0.693 +"
 	
 	
 # Tests for evalExp.
