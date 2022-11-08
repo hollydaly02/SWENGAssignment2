@@ -58,6 +58,21 @@ def evalExp(input):
     return output
 
 
+def evalLog(input):
+    output = input.lower()
+    while(output.find("log(") != -1):
+        string = output
+        startIndex = string.find("log(")
+        endIndex = startIndex + 4
+        log = ""
+        while string[endIndex] != ")":
+            log += string[endIndex]
+            endIndex += 1
+        output = string.replace("log("+log+")", str(math.log(float(log))))
+    return output
+
+
+
 
 # Function that takes a postfix expression and returns the result.
 def solvePostfix(postfix):
