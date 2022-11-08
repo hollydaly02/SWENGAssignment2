@@ -44,6 +44,21 @@ def convertToPostfix(infix):
 	return output
 
 
+def evalExp(input):
+    output = input.lower()
+    while(output.find("exp(") != -1):
+        string = output
+        startIndex = string.find("exp(")
+        endIndex = startIndex + 4
+        exp = ""
+        while string[endIndex] != ")":
+            exp += string[endIndex]
+            endIndex += 1
+        output = string.replace("exp("+exp+")", str(math.exp(float(exp))))
+    return output
+
+
+
 # Function that takes a postfix expression and returns the result.
 def solvePostfix(postfix):
 	argumentStack = deque()
