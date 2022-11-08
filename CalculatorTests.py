@@ -1,4 +1,4 @@
-from Calculator import convertToPostfix, solvePostfix
+from Calculator import convertToPostfix, evalExp, evalLog, solvePostfix
 
 # Tests for convertToPostfix.
 def testConvertToPostfix():
@@ -20,8 +20,12 @@ def testConvertToPostfix():
 	assert convertToPostfix("2 ^ 3") == "2 3 ^"
 	assert convertToPostfix("3 + 4 - 7 ^ 2") == "3 4 + 7 2 ^ -"
 	assert convertToPostfix("(3 ^ 5 - 9) * 4") == "3 5 ^ 9 - 4 *"
-
-
+	
+	
+# Tests for evalExp.
+def testEvalExp():
+	assert evalExp("exp(4)") == "54.598"
+	
 
 # Tests for solvePostfix.
 def testSolvePostfix():
